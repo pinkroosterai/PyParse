@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PyParser Output",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "meta": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string" },
+          "path": { "type": "string" },
+          "python_version": { "type": "string" }
+        },
+        "required": ["file", "path", "python_version"]
+      },
+      "imports": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["import", "from_import"] },
+            "name": { "type": "string" },
+            "alias": { "type": ["string", "null"] },
+            "module": { "type": ["string", "null"] }
+          },
+          "required": ["type", "name"],
+          "additionalProperties": true
+        }
+      },
+      "classes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "bases": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "decorators": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "methods": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "decorators": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "type": { "type": "string" },
+                        "annotation": { "type": "string" }
+                      },
+                      "required": ["name", "type"],
+                      "additionalProperties": true
+                    }
+                  },
+                  "is_async": { "type": "boolean" },
+                  "code": { "type": "string" },
+                  "comment": { "type": "string" }
+                },
+                "required": ["name", "decorators", "args", "is_async"],
+                "additionalProperties": true
+              }
+            },
+            "class_variables": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "value": { "type": "string" }
+                },
+                "required": ["name", "value"]
+              }
+            },
+            "code": { "type": "string" },
+            "comment": { "type": "string" }
+          },
+          "required": ["name", "bases", "decorators", "methods", "class_variables"],
+          "additionalProperties": true
+        }
+      },
+      "functions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "decorators": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "type": { "type": "string" },
+                  "annotation": { "type": "string" }
+                },
+                "required": ["name", "type"],
+                "additionalProperties": true
+              }
+            },
+            "is_async": { "type": "boolean" },
+            "code": { "type": "string" },
+            "comment": { "type": "string" }
+          },
+          "required": ["name", "decorators", "args", "is_async"],
+          "additionalProperties": true
+        }
+      },
+      "variables": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "value": { "type": "string" }
+          },
+          "required": ["name", "value"]
+        }
+      },
+      "code": { "type": "string" }
+    },
+    "required": ["meta", "imports", "classes", "functions", "variables"],
+    "additionalProperties": true
+  }
+}
